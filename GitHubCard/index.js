@@ -3,6 +3,24 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+function getProfiles(name){
+  const thePromise = axios.get(`https://api.github.com/users/${name}`)
+
+  thePromise.then(response => {
+    console.log('the api returned', response)
+  })
+
+  .catch(error => {
+    debugger
+    console.log('something went wrong', error)
+  })
+
+  .finally(() => {
+    console.log('done')
+  })
+}
+
+getProfiles('ajkemps')
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -28,7 +46,7 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+// const followersArray = [];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -49,6 +67,61 @@ const followersArray = [];
       </div>
     </div>
 */
+
+function cardMaker(githubData) {
+  
+  const {avartar_url, name, login, location, html_url, followers, following, bio} = githubData
+
+  // create elements
+  const card = document.createElement('div')
+  const cardImg = document.createElement('img')
+  const cardInfo = document.createElement('div')
+  const cardTitle = document.createElement('h3')
+  const cardUsername = document.createElement('p')
+  const cardLocation = document.createElement('p')
+  const cardProfile = document.createElement('p')
+  const cardFollowers = document.createElement('p')
+  const cardFollwing = document.createElement('p')
+  const cardBio = document.createElement('p')
+  const cardProfileAnchor = document.createElement('a')
+
+  // structure elements
+  card.appendChild(cardImg)
+  card.appendChild(cardInfo)
+
+  cardInfo.appendChild(cardTitle)
+  cardInfo.appendChild(cardUsername)
+  cardInfo.appendChild(cardLocation)
+  cardInfo.appendChild(cardProfile)
+  cardInfo.appendChild(cardFollowers)
+  cardInfo.appendChild(cardFollwing)
+  cardInfo.appendChild(cardBio)
+
+  // fill elements
+  cardTitle.textContent = name
+  cardUsername.textContent = login
+  cardLocation.textContent = `Location: ${location}`
+  cardProfileAnchor.textContent = html_url
+  cardProfile.textContent = `Profile: ${cardProfileAnchor}`
+  cardFollowers.textContent = `Followers: ${followers}`
+  cardFollwing.textContent = `Following: ${following}`
+  cardBio.textContent = `Bio ${bio}`
+
+  // add attributes
+  card.classList.add('card')
+  cardImg.src(avartar_url)
+  cardInfo.classList.add('card-info')
+  cardTitle.classList.add('name')
+  cardUsername.classList.add('username')
+  cardProfileAnchor.href(html_url)
+
+
+  // return item
+
+  return card
+
+  // loop array
+}
 
 /*
   List of LS Instructors Github username's:
