@@ -8,6 +8,9 @@ function getProfiles(name){
 
   thePromise.then(response => {
     console.log('the api returned', response)
+    debugger
+    const profileCard = cardMaker(response.data)
+    document.querySelector('.cards').appendChild(profileCard)
   })
 
   .catch(error => {
@@ -20,7 +23,8 @@ function getProfiles(name){
   })
 }
 
-getProfiles('ajkemps')
+console.log(getProfiles('ajkemps'))
+
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -70,7 +74,7 @@ getProfiles('ajkemps')
 
 function cardMaker(githubData) {
   
-  const {avartar_url, name, login, location, html_url, followers, following, bio} = githubData
+  const {avatar_url, name, login, location, html_url, followers, following, bio} = githubData
 
   // create elements
   const card = document.createElement('div')
@@ -81,7 +85,7 @@ function cardMaker(githubData) {
   const cardLocation = document.createElement('p')
   const cardProfile = document.createElement('p')
   const cardFollowers = document.createElement('p')
-  const cardFollwing = document.createElement('p')
+  const cardFollowing = document.createElement('p')
   const cardBio = document.createElement('p')
   const cardProfileAnchor = document.createElement('a')
 
@@ -94,8 +98,9 @@ function cardMaker(githubData) {
   cardInfo.appendChild(cardLocation)
   cardInfo.appendChild(cardProfile)
   cardInfo.appendChild(cardFollowers)
-  cardInfo.appendChild(cardFollwing)
+  cardInfo.appendChild(cardFollowing)
   cardInfo.appendChild(cardBio)
+  
 
   // fill elements
   cardTitle.textContent = name
@@ -104,24 +109,26 @@ function cardMaker(githubData) {
   cardProfileAnchor.textContent = html_url
   cardProfile.textContent = `Profile: ${cardProfileAnchor}`
   cardFollowers.textContent = `Followers: ${followers}`
-  cardFollwing.textContent = `Following: ${following}`
-  cardBio.textContent = `Bio ${bio}`
+  cardFollowing.textContent = `Following: ${following}`
+  cardBio.textContent = `Bio: ${bio}`
 
   // add attributes
   card.classList.add('card')
-  cardImg.src(avartar_url)
+  cardImg.src = avatar_url
   cardInfo.classList.add('card-info')
   cardTitle.classList.add('name')
   cardUsername.classList.add('username')
-  cardProfileAnchor.href(html_url)
+  cardProfileAnchor.href = html_url 
 
 
   // return item
-
+  cardProfile.appendChild(cardProfileAnchor)
   return card
 
   // loop array
 }
+
+
 
 /*
   List of LS Instructors Github username's:
